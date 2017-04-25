@@ -2,17 +2,10 @@ import React from 'react';
 
 export default class SparklinesLine extends React.Component {
 
-    static propTypes = {
-        color: React.PropTypes.string,
-        style: React.PropTypes.object
-    };
-
-    static defaultProps = {
-        style: {}
-    };
-
     render() {
         const { data, points, width, height, margin, color, style, onMouseMove } = this.props;
+
+        console.log('data', data);
 
         const linePoints = points
             .map((p) => [p.x, p.y])
@@ -43,6 +36,7 @@ export default class SparklinesLine extends React.Component {
 
         const tooltips = points.map((p, i) => {
           return (<circle
+            key={i}
             cx={p.x}
             cy={p.y}
             r={2}
@@ -61,3 +55,12 @@ export default class SparklinesLine extends React.Component {
         )
     }
 }
+
+SparklinesLine.propTypes = {
+    color: React.PropTypes.string,
+    style: React.PropTypes.object
+};
+
+SparklinesLine.defaultProps = {
+    style: {}
+};

@@ -1,40 +1,15 @@
 import React from 'react';
 import SparklinesText from './SparklinesText';
 import SparklinesLine from './SparklinesLine';
-import SparklinesCurve from './SparklinesCurve';
+// import SparklinesCurve from './SparklinesCurve';
 import SparklinesBars from './SparklinesBars';
-import SparklinesSpots from './SparklinesSpots';
-import SparklinesReferenceLine from './SparklinesReferenceLine';
-import SparklinesNormalBand from './SparklinesNormalBand';
+// import SparklinesSpots from './SparklinesSpots';
+// import SparklinesReferenceLine from './SparklinesReferenceLine';
+// import SparklinesNormalBand from './SparklinesNormalBand';
 import dataToPoints from './dataProcessing/dataToPoints';
 import shallowCompare from 'react-addons-shallow-compare';
 
 class Sparklines extends React.Component {
-
-    static propTypes = {
-        data: React.PropTypes.array,
-        limit: React.PropTypes.number,
-        width: React.PropTypes.number,
-        height: React.PropTypes.number,
-        svgWidth: React.PropTypes.number,
-        svgHeight: React.PropTypes.number,
-        preserveAspectRatio: React.PropTypes.string,
-        margin: React.PropTypes.number,
-        style: React.PropTypes.object,
-        min: React.PropTypes.number,
-        max: React.PropTypes.number,
-        onMouseMove: React.PropTypes.func
-    };
-
-    static defaultProps = {
-        data: [],
-        width: 240,
-        height: 60,
-        //Scale the graphic content of the given element non-uniformly if necessary such that the element's bounding box exactly matches the viewport rectangle.
-        preserveAspectRatio: 'none', //https://www.w3.org/TR/SVG/coords.html#PreserveAspectRatioAttribute
-        margin: 2
-    };
-
     constructor (props) {
         super(props);
     }
@@ -44,7 +19,7 @@ class Sparklines extends React.Component {
     }
 
     render() {
-        const {  data, limit, width, height, svgWidth, svgHeight, preserveAspectRatio, margin, style, max, min} = this.props;
+        const {  data, limit, width, height, svgWidth, svgHeight, preserveAspectRatio, margin, style, max, min, onMouseMove} = this.props;
 
         if (data.length === 0) return null;
 
@@ -58,7 +33,7 @@ class Sparklines extends React.Component {
             <svg {...svgOpts}>
                 {
                     React.Children.map(this.props.children, function(child) {
-                        return React.cloneElement(child, { data, points, width, height, margin });
+                        return React.cloneElement(child, { data, points, width, height, margin, onMouseMove });
                     })
                 }
             </svg>
@@ -66,4 +41,28 @@ class Sparklines extends React.Component {
     }
 }
 
-export { Sparklines, SparklinesLine, SparklinesCurve, SparklinesBars, SparklinesSpots, SparklinesReferenceLine, SparklinesNormalBand, SparklinesText }
+Sparklines.propTypes = {
+    data: React.PropTypes.array,
+    limit: React.PropTypes.number,
+    width: React.PropTypes.number,
+    height: React.PropTypes.number,
+    svgWidth: React.PropTypes.number,
+    svgHeight: React.PropTypes.number,
+    preserveAspectRatio: React.PropTypes.string,
+    margin: React.PropTypes.number,
+    style: React.PropTypes.object,
+    min: React.PropTypes.number,
+    max: React.PropTypes.number,
+    onMouseMove: React.PropTypes.func
+};
+
+Sparklines.defaultProps = {
+    data: [],
+    width: 240,
+    height: 60,
+    //Scale the graphic content of the given element non-uniformly if necessary such that the element's bounding box exactly matches the viewport rectangle.
+    preserveAspectRatio: 'none', //https://www.w3.org/TR/SVG/coords.html#PreserveAspectRatioAttribute
+    margin: 2
+};
+
+export { Sparklines, SparklinesBars, SparklinesText, SparklinesLine }

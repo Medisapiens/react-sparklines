@@ -10,11 +10,18 @@ module.exports = {
         filename: 'demo.build.js',
     },
     module: {
-        loaders: [{
-            test: /\.jsx?$/,
-            exclude: /(node_modules)/,
-            loader: 'babel-loader'
-        }]
+        loaders: [
+            {
+                test: /\.jsx?$/,
+                exclude: /(node_modules)/,
+                loader: 'babel-loader'
+            },
+            {
+                test: /\.css$/,
+                exclude: /(node_modules)/,
+                loader: [ 'style-loader', 'css-loader' ]
+            }
+        ]
     },
     plugins: []
 };

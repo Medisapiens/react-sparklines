@@ -1,0 +1,11 @@
+.toolTip {
+    position: fixed;
+    pointer-events: none;
+    background-color: #badcff;
+    font-size: 10px;
+    border-radius : 5px;
+}
+
+.toolTip::before {
+    transform: translateX(-50%) translateY(-2px);
+}

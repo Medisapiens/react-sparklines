@@ -1,8 +1,14 @@
 import React from 'react';
 
 export default class SparklinesBars extends React.Component {
-    render() {
+    getAbsoluteCoordinates(matrix, p) {
+        return {
+            x: (matrix.a * p.x) + (matrix.c * -p.y),
+            y: (matrix.b * p.x) + (matrix.d * -p.y)
+        };
+    }
 
+    render() {
         const { data, points, height, style, barWidth, onMouseMove, margin } = this.props;
         const strokeWidth = 1 * ((style && style.strokeWidth) || 0);
         const marginWidth = margin ? (2 * margin) : 0;
@@ -10,9 +16,9 @@ export default class SparklinesBars extends React.Component {
 
         return (
             <g transform = "scale(1,-1)">
-                {points.map((p, i) =>
+                {points.map((p, index) =>
                         <rect
-                            key={i}
+                            key={index}
                             x={p.x - (width + strokeWidth)/2}
                             y={-height}
                             width={width}
@@ -20,7 +26,7 @@ export default class SparklinesBars extends React.Component {
                             style={style}
                             onMouseOver={(e) => {
                                 e.target.setAttribute('opacity', '0.5');
-                                onMouseMove({index: i, pos: e.target.getBoundingClientRect()})
+                                onMouseMove({ index, pos: this.getAbsoluteCoordinates(e.target.getScreenCTM(), p) });
                             }}
                             onMouseLeave={(e) => {
                                 e.target.setAttribute('opacity', '1');
